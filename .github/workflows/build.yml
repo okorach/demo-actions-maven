@@ -50,4 +50,4 @@ jobs:
       - name: Set tags
         run: |
           # Set project tags on the fly
-          curl -X POST -u ${{ secrets.SONAR_TOKEN }}: "${{ secrets.SONAR_HOST_URL }}/api/project_tags/set?project=${{env.projectKey}&tags=${{env.tags}}"
+          curl -X POST -u ${{ secrets.SONAR_TOKEN }}: "${{ secrets.SONAR_HOST_URL }}/api/project_tags/set?project=${{env.projectKey}}&tags=${{env.tags}}"
