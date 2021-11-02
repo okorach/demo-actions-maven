@@ -13,6 +13,10 @@ public class CoverageMetrics {
    if (i != 0) {
       k = 1;
    }
+   int j;
+   for (j=0; j > 10; j++) {
+     // do Nothing
+   }
    return (float)i/(k+1);
   }
 }
