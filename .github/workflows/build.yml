@@ -1,0 +1,51 @@
+name: Build and Scan
+
+env:
+  tags: 'github,actions,github-actions,maven'
+  projectKey: 'demo:github-actions-maven'
+
+on:
+  push:
+    branches:
+      - master # or the name of your main branch
+  pull_request:
+    types: [opened, synchronize, reopened]
+  # schedule:
+  #  - cron: '17 0 * * 4'
+jobs:
+  #----------------- Maven scan --------------------
+  scan-maven:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Cache SonarQube packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build and analyze maven component
+        working-directory: ./comp-maven
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: |
+          mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install org.jacoco:jacoco-maven-plugin:report sonar:sonar
+      - name: Set tags
+        run: |
+          # Set project tags on the fly
+          curl -X POST -u ${{ secrets.SONAR_TOKEN }}: "${{ secrets.SONAR_HOST_URL }}/api/project_tags/set?project=${{env.projectKey}&tags=${{env.tags}}"

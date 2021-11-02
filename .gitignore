@@ -1,0 +1,10 @@
+.scannerwork/
+build/
+.coverage
+**/__pycache__/
+.sonarqube/
+comp-maven/.settings/
+comp-maven/.classpath
+comp-maven/.project
+**/*.log
+
