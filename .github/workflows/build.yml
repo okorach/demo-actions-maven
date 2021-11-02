@@ -7,7 +7,9 @@ env:
 on:
   push:
     branches:
-      - master # or the name of your main branch
+      - main # or the name of your main branch
+      - master
+      - develop
   pull_request:
     types: [opened, synchronize, reopened]
   # schedule:
