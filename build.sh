@@ -1,9 +1,12 @@
 #!/bin/bash
 
-# Run each build.sh script in underlying comp-* directories
-for d in *; do
-    if [[ -d $d ]] && [[ $d =~ comp-.* ]]
-    then
-        cd $d; ./build.sh $*; cd -
-    fi
-done
+# Load common environment
+
+mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install org.jacoco:jacoco-maven-plugin:report \
+   -Dmaven.test.failure.ignore=true \
+   sonar:sonar \
+   -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN \
+   -Dsonar.exclusions=pom.xml \
+   $*
+
+exit $?
