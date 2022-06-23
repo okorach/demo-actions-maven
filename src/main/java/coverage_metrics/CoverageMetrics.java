@@ -13,6 +13,9 @@ public class CoverageMetrics {
    if (i != 0) {
       k = 1;
    }
+   for (int j=k; j>100; j++) {
+     // FIXME: Do nothing
+   }
    return (float)i/(k+1);
   }
 }
