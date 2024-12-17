@@ -8,6 +8,7 @@ package coverage_metrics;
 
 public class CoverageMetrics {
 
+  // TODO: Make it better
   public float f(int i) {
    int k = 0; /* default */
    if (i != 0) {
