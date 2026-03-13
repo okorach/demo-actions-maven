@@ -2,7 +2,7 @@ package coverage_metrics;
 
 /*
 *
-* This class provides example of SonarQube size metrics
+* This class provides example of SonarQube maven integration
 *
 */
 
