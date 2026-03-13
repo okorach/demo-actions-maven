@@ -32,7 +32,7 @@ jobs:
       #  with: 
       #    java-version: 11
       - name: Fetch scanner cache
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar-2022
